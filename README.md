@@ -18,6 +18,11 @@ A simple Solidity project to demonstrate **Uniswap V2 token swaps** and **liquid
   - Handles edge cases: insufficient liquidity, deadline exceeded  
   - Emits `LiquidityAdded` and `LiquidityRemoved` events  
 
+- **Optimal One-Side Supply Demo (`UniswapV2OptimalOneSideSupply`)**  
+  - Calculates optimal token amount for one-sided liquidity provision  
+  - Minimizes impermanent loss by balancing token amounts  
+  - Supports adding liquidity with a single token input  
+
 ---
 
 ## Project Structure
@@ -26,12 +31,15 @@ A simple Solidity project to demonstrate **Uniswap V2 token swaps** and **liquid
 src/
   UniswapV2SwapDemo.sol
   UniswapV2AddRemoveLiquidityDemo.sol
+  UniswapV2OptimalOneSideSupply.sol
 test/fork/
   UniswapV2SwapDemo.t.sol
   UniswapV2AddRemoveLiquidityDemo.t.sol
+  UniswapV2OptimalOneSideSupply.t.sol
 script/
   UniswapV2SwapDemo.s.sol
   UniswapV2AddRemoveLiquidityDemo.s.sol
+  UniswapV2OptimalOneSideSupply.s.sol
 ```
 
 - `src/` → Solidity contracts  
@@ -66,8 +74,8 @@ The tests run **against a forked Sepolia environment**:
 forge test -vvvv
 ```
 
-- have `vm.createSelectFork` in testContract so there is no need for `--fork-url`
-- have `vm.startPrank` in testContract so there is no need for `--private-key`
+- have `vm.createSelectFork` in test contract so there is no need for `--fork-url`
+- have `vm.startPrank` in test contract so there is no need for `--private-key`
 ---
 
 ## Scripts
@@ -82,10 +90,14 @@ forge script script/UniswapV2SwapDemo.s.sol:UniswapV2SwapDemoScript \
 # Liquidity Demo script
 forge script script/UniswapV2AddRemoveLiquidityDemo.s.sol:UniswapV2AddRemoveLiquidityDemoScript \
   --broadcast -vvvv
+
+# Optimal One-Side Supply Demo script
+forge script script/UniswapV2OptimalOneSideSupply.s.sol:UniswapV2OptimalOneSideSupplyScript \
+  --broadcast -vvvv
 ```
 
-- have `vm.createSelectFork` in testContract so there is no need for --fork-url
-- have `vm.startPrank` in testContract so there is no need for --private-key
+- have `vm.createSelectFork` in script contract so there is no need for --fork-url
+- have `vm.startPrank` in script contract so there is no need for --private-key
 - `--broadcast` → sends real transactions if targeting live/testnet  
 - `-vvvv` → verbose output, useful for debugging amounts and balances  
 
@@ -101,6 +113,7 @@ forge script script/UniswapV2AddRemoveLiquidityDemo.s.sol:UniswapV2AddRemoveLiqu
 - `tokenC:0x7517CC51e2d5b3bAdd68B3399C64FbEAEaaCb33C`
 - `swapper:0x3dcdf52d388Ae5bb69553E29e5eB40FCBcaf9478`
 - `liquidityProvider:0xA8C9648c980251d4F09f0CAF6576FBc715acd79E`
+- `zapper:0xc452eF8E8185D8f596B21B67b6940400ccd00B5E`
 
 ---
 ## Disclaimer
